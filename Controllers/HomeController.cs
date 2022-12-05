@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using MujHelpdesk.Data;
 using MujHelpdesk.Models;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MujHelpdesk.Controllers
 {
@@ -21,15 +24,25 @@ namespace MujHelpdesk.Controllers
         private static List<Request> reqList = new();
 
         public IActionResult List()
-        {
+		{
 			
-
-			reqList = _context.Requests.ToList();
+			reqList = _context.Requests.Where(a => a.Status == 0).ToList();
+			//reqList = _context.Requests.ToList();
 
 			return View(reqList);
         }
 
-        public IActionResult CreateForm()
+		public IActionResult CloseReq(int id)
+		{
+			Request req = _context.Requests.Single(x => x.Id == id);
+			req.Status = 1;
+			_context.SaveChanges();
+
+			return RedirectToAction(nameof(List));
+		}
+		
+
+		public IActionResult CreateForm()
         {
 			var newReq = new Request();
 			return View(newReq);
