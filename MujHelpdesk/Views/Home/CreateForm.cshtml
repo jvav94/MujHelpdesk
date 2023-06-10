@@ -1,0 +1,65 @@
+﻿
+@model Request
+@{
+    ViewData["Title"] = "Nový požadavek";
+	
+}
+
+
+
+<div class="text-center">
+    <h1 class="display-4">Vítejte</h1>
+	<br/>
+    <a class="btn btn-primary" style="float: left" asp-controller="Home" asp-action="List">Zpět na seznam</a>
+
+	<br />
+	<br />
+	<br />
+
+				<form class="mx-auto mt-5 mb-5 px-5 pt-5 pb-5 rounded-5 bg-light col-4" asp-controller="Home" asp-action="RequestCreate" enctype="multipart/form-data" method="post">
+		@section Scripts{
+			<partial name="_ValidationScriptsPartial" />
+		}
+					
+					<div class="mb-3">
+					<label class="form-label">Uživatelské jméno</label>
+						<input asp-for="Username" type="text" class="form-control" />
+
+					</div>
+
+					<div class="mb-3">
+					<label class="form-label">Nadpis</label>
+						<input asp-for="Title" type="text" class="form-control" />
+						<span asp-validation-for="Title" class="text-danger"></span>
+					</div>
+
+					<div class="mb-3">
+					<label class="form-label">Text</label>
+					<textarea asp-for="Text" type="text" class="form-control" ></textarea>
+					<span asp-validation-for="Text" class="text-danger"></span>
+						
+					</div>
+
+					<div class="mb-3">
+					<label class="form-label" >Vložte screenshot</label>
+					<input name="imgFiles" type="file" class="form-control" />
+					</div>
+
+
+
+
+					<div class ="mb-3">
+
+						<button type="submit" class="btn btn-primary">Vytvoř</button>
+
+					</div>
+
+				</form>
+
+		
+
+
+</div>
+
+
+

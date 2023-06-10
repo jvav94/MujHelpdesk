@@ -1,0 +1,62 @@
+﻿@model List<MujHelpdesk.Models.Request>
+
+@{
+    
+    ViewData["Title"] = "Seznam požadavků";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Nevyřešené požadavky</h1>
+
+   <table class="table">
+	<thead>
+		<tr>
+			<td>
+				Název požadavku
+			</td>
+
+			<td>
+				Založil
+			</td>
+
+			<td>
+				Datum
+			</td>
+
+		</tr>
+
+	</thead>
+	<tbody>
+
+		@foreach(var req in Model)
+		{
+			<tr>
+
+			<td>
+				<a class="btn btn-link" style="float: none" asp-controller="Home" asp-action="Item" asp-route-reqId="@req.Id">@req.Title</a>
+			</td>
+
+			<td>
+				@req.Username
+			</td>
+
+			<td>
+				@req.OrigDate		
+			</td>
+
+
+			</tr>
+		}
+
+
+	</tbody>
+
+	</table>
+
+
+
+    <a class="btn btn-primary" style="float: left" asp-controller="Home" asp-action="CreateForm">Nový požadavek</a>
+</div>
+
+
+

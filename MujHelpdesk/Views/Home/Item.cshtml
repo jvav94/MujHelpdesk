@@ -1,0 +1,104 @@
+﻿
+@model ReqComms
+@{
+	ViewData["Title"] = "test";
+
+
+}
+
+
+<div class="text-center">
+	<h1 class="display-4">@Model.Req.Title</h1>
+	<br/>
+	<a class="btn btn-secondary" style="float: left" asp-controller="Home" asp-action="List">Zpět na seznam</a>
+	<a class="btn btn-secondary" style="float: right" asp-controller="Home" asp-action="CloseReq" asp-route-id=@Model.Req.Id>Uzavřít požadavek</a>
+
+			<div class="mx-auto mt-5 mb-5 px-5 pt-5 pb-5 rounded-5 bg-light">
+					<div class="mb-3 text-start">
+						@Model.Req.Text
+					</div>
+
+		@if(Model.Req.Img != null)
+		{
+
+			string base64String = Convert.ToBase64String(Model.Req.Img);
+			string imgURL = string.Format("data:image/jpg;base64," + base64String);
+				<img src="@imgURL"/>
+			
+		}
+
+		<p class="smallText text-sm-end fw-light fst-italic"><i>@Model.Req.Username</i></p>
+		<p class="smallText text-sm-end fw-light fst-italic"><i>@Model.Req.OrigDate</i></p>
+					
+
+				</div>
+
+				<!--komentáře-->
+
+
+
+	@foreach(Comment com in Model.ComList)
+	{
+		string row;
+		string cls;
+		@if(Model.Req.Username == com.UserName)
+		{
+			row = "row justify-content-start";
+			cls = "bg-light";
+
+		}else{
+			row = "row justify-content-end";
+			cls = "darker";
+		}
+
+		<div class="@row">
+			<div class="mt-2 mb-2 px-3 pt-3 pb-3 rounded-2 col-8 @cls">
+			
+					<div class="mb-3 text-start">
+						@com.Text
+					</div>
+
+		@if(com.Img != null)
+		{
+
+			string base64String = Convert.ToBase64String(com.Img);
+			string imgURL = string.Format("data:image/jpg;base64," + base64String);
+				<img src="@imgURL"/>
+			
+		}
+
+		<p class="smallText text-sm-end fw-light fst-italic"><i>@com.UserName</i></p>
+		<p class="smallText text-sm-end fw-light fst-italic"><i>@com.PostDate</i></p>
+					
+		 </div>
+		</div>
+
+	}
+
+
+	<form class="mx-auto  mt-5 mb-5 px-5 pt-5 pb-5 rounded-5 bg-light col-4" asp-controller="Home" asp-action="CommentCreate" enctype="multipart/form-data" method="post">
+					<div class="mb-3">
+					<label class="form-label">Uživatelské jméno</label>
+						<input name="Username" type="text" class="form-control" />
+					</div>
+
+					<div class="mb-3">
+					<label class="form-label">Text</label>
+					<textarea name="Text" type="text" class="form-control" ></textarea>
+					</div>
+
+					<input type="hidden" name="rId" value="@Model.Req.Id" />
+
+					<div class ="mb-3">
+
+						<button type="submit" class="btn btn-primary">Nová odpověď</button>
+
+					</div>
+
+				</form>
+
+		
+
+
+</div>
+
